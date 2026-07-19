@@ -1,0 +1,76 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://bnvldq7p7k5li"]
+
+[ext_resource type="Texture2D" uid="uid://bflxdywmnmpnw" path="res://Art/Sprites/Dillo/sprsheet_idle.png" id="1_2fx1g"]
+[ext_resource type="Texture2D" uid="uid://hwxck46id8oi" path="res://Art/Sprites/Dillo/spr_dillo_null.png" id="2_1xq6i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsucl"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(0, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6g8q"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(300, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5lx8"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(600, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv47y"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(900, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcu71"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(1200, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nx8p"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(1500, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edm3l"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(1800, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wxfk"]
+atlas = ExtResource("1_2fx1g")
+region = Rect2(2100, 0, 300, 300)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsucl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6g8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5lx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv47y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcu71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nx8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edm3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wxfk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1xq6i")
+}],
+"loop": true,
+"name": &"temp",
+"speed": 5.0
+}]
