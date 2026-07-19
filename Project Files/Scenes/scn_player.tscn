@@ -8,10 +8,16 @@ size = Vector2(132, 132)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_8nrtw")
-max_movement_speed = 450.0
-seconds_to_accelerate = 0.5
-seconds_to_decelerate = 0.2
-seconds_to_stop = 1.0
+max_movement_speed = 500.0
+seconds_to_accelerate = 1.0
+seconds_to_decelerate = 0.6
+seconds_to_stop = 0.3
+jump_height = 140.0
+jump_seconds_to_peak = 0.5
+jump_seconds_to_descent = 0.4
+max_upward_velocity = -700.0
+jump_buffer_frames = 10.0
+hang_time_frames = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sdmxp")
