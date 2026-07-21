@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=6 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
+[ext_resource type="Script" path="res://Scripts/PlayerInput.gd" id="2_g7jqk"]
 [ext_resource type="Script" path="res://Scripts/PlayerAnimations.gd" id="3_8ixvj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(132, 132)
 
 [node name="Player" type="CharacterBody2D"]
+process_mode = 4
 script = ExtResource("1_8nrtw")
 max_movement_speed = 500.0
 seconds_to_accelerate = 1.0
@@ -17,10 +19,13 @@ jump_height = 108.0
 jump_seconds_to_peak = 0.5
 jump_seconds_to_descent = 0.4
 max_upward_velocity = -700.0
-jump_buffer_frames = 10.0
 hang_time_frames = 1
 air_cancel_velocity = 200.0
-air_cancel_buffer_frames = 70
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement")]
+process_mode = 3
+script = ExtResource("2_g7jqk")
+player_movement = NodePath("..")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sdmxp")

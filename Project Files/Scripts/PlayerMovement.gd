@@ -1,15 +1,11 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+@export var player_input: Node
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_jumping: bool = false
 
 @export_group("Horizontal Movement")
-static var movement_velocity: Vector2 = Vector2.ZERO
-var input_direction: float = 0
-
 @export var max_movement_speed: float
 @export var seconds_to_accelerate: float
 @export var seconds_to_decelerate: float
@@ -34,18 +30,12 @@ var is_grounded: bool = false
 @export var coyote_time_frames = 3
 @onready var current_coyote_time_frame = 0
 
-@export_subgroup("Jump Buffer")
-@export var jump_buffer_frames: float
-@onready var current_jump_buffer_frame = jump_buffer_frames
-
 @export_subgroup("Hang Time")
 @export  var hang_time_frames: int
 @onready var current_hangtime_frame = hang_time_frames
 
-@export_subgroup("Air Cancel")
+@export_group("Air Cancel")
 @export var air_cancel_velocity: float
-@export var air_cancel_buffer_frames: int
-@onready var current_air_cancel_buffer_frame = air_cancel_buffer_frames
 
 
 signal idled
@@ -62,38 +52,12 @@ func _ready():
 	deceleration = max_movement_speed / (seconds_to_decelerate / get_physics_process_delta_time())
 	friction = max_movement_speed / (seconds_to_stop / get_physics_process_delta_time())
 
-func _process(_delta):
-	get_input()
-
 func _physics_process(delta):
 	calculate_horizontal_movement()
 	calculate_gravity(delta)
 	coyote_time()
-
 	check_collisions()
 	move_and_slide()
-
-func get_input() -> void:
-	#Horizontal movement
-	input_direction = sign(Input.get_axis("move left", "move right"))
-	
-	#Vertical movement
-	if Input.is_action_just_pressed("jump"):
-		current_jump_buffer_frame = 0
-		is_jumping = true
-
-	elif Input.is_action_just_released("jump") and not is_grounded:
-		is_jumping = false
-
-	if current_jump_buffer_frame < jump_buffer_frames:
-		jump()
-		current_jump_buffer_frame += 1 
-
-	if Input.is_action_just_pressed("air cancel"):
-		air_cancel()
-
-	if current_air_cancel_buffer_frame < air_cancel_buffer_frames:
-		current_air_cancel_buffer_frame += 1 
 
 #Horizontal Movement
 func calculate_horizontal_movement() -> void:
@@ -101,14 +65,14 @@ func calculate_horizontal_movement() -> void:
 		idled.emit()
 		thrust()
 
-	elif input_direction == 0:
+	elif player_input.input_direction == 0:
 		apply_friction()
 
 	else:
-		if sign(velocity.x) != input_direction:
+		if sign(velocity.x) != player_input.input_direction:
 			decelerate()
-		elif sign(velocity.x) == input_direction:
-			if abs(velocity.x) > abs(max_movement_speed * input_direction):
+		elif sign(velocity.x) == player_input.input_direction:
+			if abs(velocity.x) > abs(max_movement_speed * player_input.input_direction):
 				slow_down()
 			else:
 				accelerate()
@@ -117,25 +81,25 @@ func calculate_horizontal_movement() -> void:
 
 func thrust() -> void:
 	#print("thrust")
-	velocity.x = 0.1 * input_direction
+	velocity.x = 0.1 * player_input.input_direction
 
 func slow_down() -> void:
 	#print("slow")
-	velocity.x = move_toward(velocity.x, max_movement_speed * input_direction, acceleration)
+	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
 
 func accelerate() -> void:
 	#print("accel")
-	velocity.x = move_toward(velocity.x, max_movement_speed * input_direction, acceleration)
-	accelerated.emit(input_direction)
+	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
+	accelerated.emit(player_input.input_direction)
 
 func decelerate() -> void:
 	#print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
-	deccelerated.emit(input_direction)
+	deccelerated.emit(player_input.input_direction)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
-	deccelerated.emit(input_direction)
+	deccelerated.emit(player_input.input_direction)
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
@@ -171,15 +135,14 @@ func coyote_time() -> void:
 func grounded():
 	current_coyote_time_frame = 0
 	current_hangtime_frame = 0
-	movement_velocity.y = 0
 	is_grounded = true
 
 func air_cancel():
-	if is_grounded or current_air_cancel_buffer_frame < air_cancel_buffer_frames:
+	if is_grounded or player_input.current_air_cancel_buffer_frame < player_input.air_cancel_buffer_frames:
 		return
 
 	velocity.x = air_cancel_velocity * -sign(velocity.x)
-	current_air_cancel_buffer_frame = 0
+	player_input.current_air_cancel_buffer_frame = 0
 	air_canceled.emit()
  
 
