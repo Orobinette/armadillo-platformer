@@ -8,9 +8,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(132, 132)
 
-[node name="Player" type="CharacterBody2D"]
-process_mode = 4
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input")]
 script = ExtResource("1_8nrtw")
+player_input = NodePath("Input")
 max_movement_speed = 500.0
 seconds_to_accelerate = 1.0
 seconds_to_decelerate = 0.6
@@ -23,7 +23,6 @@ hang_time_frames = 1
 air_cancel_velocity = 200.0
 
 [node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement")]
-process_mode = 3
 script = ExtResource("2_g7jqk")
 player_movement = NodePath("..")
 
@@ -41,3 +40,4 @@ script = ExtResource("3_8ixvj")
 [connection signal="falling" from="." to="Anim" method="_on_fall"]
 [connection signal="idled" from="." to="Anim" method="_on_idle"]
 [connection signal="jumped" from="." to="Anim" method="_on_jump"]
+[connection signal="rolled" from="Input" to="Anim" method="_on_rolled"]

@@ -23,3 +23,6 @@ func _on_fall():
 
 func _on_air_cancel():
 	play("temp")
+
+func _on_rolled():
+	play("temp")

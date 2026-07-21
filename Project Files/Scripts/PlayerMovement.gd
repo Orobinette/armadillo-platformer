@@ -59,13 +59,18 @@ func _physics_process(delta):
 	check_collisions()
 	move_and_slide()
 
+	print(velocity)
+
 #Horizontal Movement
 func calculate_horizontal_movement() -> void:
+	if player_input.state == player_input.states.ROLLING:
+		return
+
 	if velocity.x == 0:
 		idled.emit()
 		thrust()
 
-	elif player_input.input_direction == 0:
+	elif player_input.input_direction == 0 and is_grounded:
 		apply_friction()
 
 	else:
@@ -73,33 +78,32 @@ func calculate_horizontal_movement() -> void:
 			decelerate()
 		elif sign(velocity.x) == player_input.input_direction:
 			if abs(velocity.x) > abs(max_movement_speed * player_input.input_direction):
-				slow_down()
+				slow_to_max_speed()
 			else:
 				accelerate()
-
-	print(velocity)
 
 func thrust() -> void:
 	#print("thrust")
 	velocity.x = 0.1 * player_input.input_direction
 
-func slow_down() -> void:
+func slow_to_max_speed() -> void:
 	#print("slow")
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
 
 func accelerate() -> void:
-	#print("accel")
+	print("accel")
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
 	accelerated.emit(player_input.input_direction)
 
 func decelerate() -> void:
-	#print("deccel")
+	print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
 	deccelerated.emit(player_input.input_direction)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
 	deccelerated.emit(player_input.input_direction)
+	print("fric")
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
@@ -141,7 +145,8 @@ func air_cancel():
 	if is_grounded or player_input.current_air_cancel_buffer_frame < player_input.air_cancel_buffer_frames:
 		return
 
-	velocity.x = air_cancel_velocity * -sign(velocity.x)
+	#velocity.x = air_cancel_velocity * -sign(velocity.x)
+	velocity.x = air_cancel_velocity * player_input.input_direction
 	player_input.current_air_cancel_buffer_frame = 0
 	air_canceled.emit()
  
