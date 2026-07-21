@@ -42,6 +42,19 @@ var is_grounded: bool = false
 @export  var hang_time_frames: int
 @onready var current_hangtime_frame = hang_time_frames
 
+@export_subgroup("Air Cancel")
+@export var air_cancel_velocity: float
+@export var air_cancel_buffer_frames: int
+@onready var current_air_cancel_buffer_frame = air_cancel_buffer_frames
+
+
+signal idled
+signal accelerated(input_direction)
+signal deccelerated(input_direction)
+signal jumped
+signal falling
+signal air_canceled
+
 
 func _ready():
 	await get_tree().physics_frame
@@ -62,7 +75,7 @@ func _physics_process(delta):
 
 func get_input() -> void:
 	#Horizontal movement
-	input_direction = sign(Input.get_axis("move_left", "move_right"))
+	input_direction = sign(Input.get_axis("move left", "move right"))
 	
 	#Vertical movement
 	if Input.is_action_just_pressed("jump"):
@@ -76,10 +89,16 @@ func get_input() -> void:
 		jump()
 		current_jump_buffer_frame += 1 
 
+	if Input.is_action_just_pressed("air cancel"):
+		air_cancel()
+
+	if current_air_cancel_buffer_frame < air_cancel_buffer_frames:
+		current_air_cancel_buffer_frame += 1 
 
 #Horizontal Movement
 func calculate_horizontal_movement() -> void:
 	if velocity.x == 0:
+		idled.emit()
 		thrust()
 
 	elif input_direction == 0:
@@ -89,37 +108,48 @@ func calculate_horizontal_movement() -> void:
 		if sign(velocity.x) != input_direction:
 			decelerate()
 		elif sign(velocity.x) == input_direction:
-			if velocity.x > max_movement_speed * input_direction:
+			if abs(velocity.x) > abs(max_movement_speed * input_direction):
 				slow_down()
 			else:
 				accelerate()
 
+	print(velocity)
+
 func thrust() -> void:
+	#print("thrust")
 	velocity.x = 0.1 * input_direction
 
 func slow_down() -> void:
+	#print("slow")
 	velocity.x = move_toward(velocity.x, max_movement_speed * input_direction, acceleration)
 
 func accelerate() -> void:
+	#print("accel")
 	velocity.x = move_toward(velocity.x, max_movement_speed * input_direction, acceleration)
+	accelerated.emit(input_direction)
 
 func decelerate() -> void:
+	#print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
+	deccelerated.emit(input_direction)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
+	deccelerated.emit(input_direction)
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
 	if not is_grounded:
 		if velocity.y < 0 and is_jumping: #if rising
 			velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
+			jumped.emit()
 			
 		elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime
 			current_hangtime_frame += 1
 
 		else: 
 			velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
+			falling.emit()
 
 func jump() -> void:
 	if is_grounded:
@@ -144,6 +174,16 @@ func grounded():
 	movement_velocity.y = 0
 	is_grounded = true
 
+func air_cancel():
+	if is_grounded or current_air_cancel_buffer_frame < air_cancel_buffer_frames:
+		return
+
+	velocity.x = air_cancel_velocity * -sign(velocity.x)
+	current_air_cancel_buffer_frame = 0
+	air_canceled.emit()
+ 
+
+# checks
 func check_collisions() -> void:
 	if is_on_ceiling():
 		is_jumping = false

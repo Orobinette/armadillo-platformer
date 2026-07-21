@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=5 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
+[ext_resource type="Script" path="res://Scripts/PlayerAnimations.gd" id="3_8ixvj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(132, 132)
@@ -12,16 +13,26 @@ max_movement_speed = 500.0
 seconds_to_accelerate = 1.0
 seconds_to_decelerate = 0.6
 seconds_to_stop = 0.3
-jump_height = 140.0
+jump_height = 108.0
 jump_seconds_to_peak = 0.5
 jump_seconds_to_descent = 0.4
 max_upward_velocity = -700.0
 jump_buffer_frames = 10.0
 hang_time_frames = 1
+air_cancel_velocity = 200.0
+air_cancel_buffer_frames = 70
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sdmxp")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"temp"
+animation = &"idle"
+script = ExtResource("3_8ixvj")
+
+[connection signal="accelerated" from="." to="Anim" method="_on_accelerate"]
+[connection signal="air_canceled" from="." to="Anim" method="_on_air_cancel"]
+[connection signal="deccelerated" from="." to="Anim" method="_on_deccelerate"]
+[connection signal="falling" from="." to="Anim" method="_on_fall"]
+[connection signal="idled" from="." to="Anim" method="_on_idle"]
+[connection signal="jumped" from="." to="Anim" method="_on_jump"]
