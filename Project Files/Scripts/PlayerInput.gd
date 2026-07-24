@@ -8,7 +8,8 @@ enum states {WALKING, ROLLING}
 @onready var selected_gun = guns.REVOLVER
 enum guns {REVOLVER, SHOTGUN, RIFLE}
 
-var input_direction: float = 0
+var input_direction: int = 0
+var dir_facing: int = -1
 
 @export_group("Jump Buffer")
 @export var jump_buffer_frames: float
@@ -20,6 +21,7 @@ var input_direction: float = 0
 
 
 signal rolled
+signal walked
 
 
 func _process(_delta):
@@ -32,6 +34,7 @@ func get_input():
 		#print("roll")
 	elif Input.is_action_just_released("shell"):
 		state = states.WALKING
+		walked.emit()
 		#print("walk")
 
 	match state:
@@ -72,6 +75,10 @@ func get_input():
 	
 func get_input_walking():
 	input_direction = sign(Input.get_axis("move left", "move right"))
+	if input_direction != 0:
+		dir_facing = input_direction
+
+	#print(dir_facing)
 
 func get_input_rolling():
 	input_direction = 0
@@ -80,13 +87,16 @@ func get_input_rolling():
 		match selected_gun:
 			guns.REVOLVER:
 				print("Fire: Revolver")
+				player_movement.shoot(guns.REVOLVER)
 			guns.SHOTGUN:
+				player_movement.shoot(guns.SHOTGUN)
 				print("Fire: Shotgun")
 			guns.RIFLE:
+				player_movement.shoot(guns.RIFLE)
 				print("Fire: Rifle")
 	elif Input.is_action_just_pressed("quickfire revolver"):
-		print("Fire: Revolver")
+		player_movement.shoot(guns.REVOLVER)
 	elif Input.is_action_just_pressed("quickfire shotgun"):
-		print("Fire: Shotgun")
+		player_movement.shoot(guns.SHOTGUN)
 	elif Input.is_action_just_pressed("quickfire rifle"):
-		print("Fire: Rifle")
+		player_movement.shoot(guns.RIFLE)

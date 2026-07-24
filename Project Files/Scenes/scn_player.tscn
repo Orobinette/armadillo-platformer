@@ -1,16 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=8 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
 [ext_resource type="Script" path="res://Scripts/PlayerInput.gd" id="2_g7jqk"]
 [ext_resource type="Script" path="res://Scripts/PlayerAnimations.gd" id="3_8ixvj"]
+[ext_resource type="Texture2D" uid="uid://m12l5ysl8f7s" path="res://Art/Sprites/Dillo/spr_crosshair.png" id="5_naerd"]
+[ext_resource type="Script" path="res://Scripts/Crosshair.gd" id="6_itcpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(132, 132)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input", "crosshair")]
 script = ExtResource("1_8nrtw")
 player_input = NodePath("Input")
+crosshair = NodePath("Crosshair")
 max_movement_speed = 500.0
 seconds_to_accelerate = 1.0
 seconds_to_decelerate = 0.6
@@ -34,6 +37,13 @@ sprite_frames = ExtResource("2_8apyp")
 animation = &"idle"
 script = ExtResource("3_8ixvj")
 
+[node name="Crosshair" type="Sprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
+position = Vector2(100, 0)
+texture = ExtResource("5_naerd")
+script = ExtResource("6_itcpb")
+player_movement = NodePath("..")
+player_input = NodePath("../Input")
+
 [connection signal="accelerated" from="." to="Anim" method="_on_accelerate"]
 [connection signal="air_canceled" from="." to="Anim" method="_on_air_cancel"]
 [connection signal="deccelerated" from="." to="Anim" method="_on_deccelerate"]
@@ -41,3 +51,5 @@ script = ExtResource("3_8ixvj")
 [connection signal="idled" from="." to="Anim" method="_on_idle"]
 [connection signal="jumped" from="." to="Anim" method="_on_jump"]
 [connection signal="rolled" from="Input" to="Anim" method="_on_rolled"]
+[connection signal="rolled" from="Input" to="Crosshair" method="_on_rolled"]
+[connection signal="walked" from="Input" to="Crosshair" method="_on_walked"]

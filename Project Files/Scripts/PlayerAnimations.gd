@@ -1,19 +1,26 @@
 extends AnimatedSprite2D
 
 func _ready():
-	play("idle")
+	play("idle_L")
 
-func _on_idle():
-	play("idle")
+func _on_idle(input_direction):
+	if input_direction == 1:
+		play("idle_R")
+	elif input_direction == -1:
+		play("idle_L")
 
 func _on_accelerate(input_direction):
 	if input_direction == 1:
-		play("run_right")
+		play("run_R")
 	elif input_direction == -1:
-		play("run_left")
+		play("run_L")
 
 func _on_deccelerate(input_direction):
-	play("temp")
+	#print(input_direction)
+	if input_direction == 1:
+		play("decelerate_R")
+	elif input_direction == -1:
+		play("decelerate_L")
 
 func _on_jump():
 	play("temp")

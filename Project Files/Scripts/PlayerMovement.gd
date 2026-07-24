@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var player_input: Node
+@export var crosshair: Node
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_jumping: bool = false
@@ -59,7 +60,7 @@ func _physics_process(delta):
 	check_collisions()
 	move_and_slide()
 
-	print(velocity)
+	#print(velocity)
 
 #Horizontal Movement
 func calculate_horizontal_movement() -> void:
@@ -67,7 +68,7 @@ func calculate_horizontal_movement() -> void:
 		return
 
 	if velocity.x == 0:
-		idled.emit()
+		idled.emit(player_input.dir_facing)
 		thrust()
 
 	elif player_input.input_direction == 0 and is_grounded:
@@ -98,11 +99,11 @@ func accelerate() -> void:
 func decelerate() -> void:
 	print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
-	deccelerated.emit(player_input.input_direction)
+	deccelerated.emit(player_input.dir_facing)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
-	deccelerated.emit(player_input.input_direction)
+	deccelerated.emit(player_input.dir_facing)
 	print("fric")
 
 #Vertical Movement
@@ -149,7 +150,17 @@ func air_cancel():
 	velocity.x = air_cancel_velocity * player_input.input_direction
 	player_input.current_air_cancel_buffer_frame = 0
 	air_canceled.emit()
+
+func shoot(gun_type):
+	match gun_type:
+		player_input.guns.REVOLVER:
+			velocity = crosshair.get_trajectory() * 700
+		player_input.guns.SHOTGUN:
+			velocity = crosshair.get_trajectory() * 1000
+		player_input.guns.RIFLE:
+			velocity = crosshair.get_trajectory() * 1400
  
+	print(crosshair.get_trajectory())
 
 # checks
 func check_collisions() -> void:
