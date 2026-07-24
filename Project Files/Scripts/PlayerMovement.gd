@@ -77,6 +77,7 @@ func calculate_horizontal_movement() -> void:
 	else:
 		if sign(velocity.x) != player_input.input_direction:
 			decelerate()
+
 		elif sign(velocity.x) == player_input.input_direction:
 			if abs(velocity.x) > abs(max_movement_speed * player_input.input_direction):
 				slow_to_max_speed()
@@ -103,7 +104,6 @@ func decelerate() -> void:
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
-	deccelerated.emit(player_input.dir_facing)
 	print("fric")
 
 #Vertical Movement
