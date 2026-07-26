@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var player_input: Node
+@export var player_guns: Node
 @export var crosshair: Node
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -45,6 +46,7 @@ signal deccelerated(input_direction)
 signal jumped
 signal falling
 signal air_canceled
+signal grounded
 
 
 func _ready():
@@ -127,7 +129,7 @@ func jump() -> void:
 
 func coyote_time() -> void:
 	if is_on_floor() and current_coyote_time_frame != 0:
-		grounded()
+		ground()
 
 	elif not is_on_floor():
 		if current_coyote_time_frame < coyote_time_frames: #Coyote time active
@@ -137,10 +139,11 @@ func coyote_time() -> void:
 			is_grounded = false
 			current_coyote_time_frame = coyote_time_frames
 
-func grounded():
+func ground():
 	current_coyote_time_frame = 0
 	current_hangtime_frame = 0
 	is_grounded = true
+	grounded.emit()
 
 func air_cancel():
 	if is_grounded or player_input.current_air_cancel_buffer_frame < player_input.air_cancel_buffer_frames:
@@ -151,16 +154,14 @@ func air_cancel():
 	player_input.current_air_cancel_buffer_frame = 0
 	air_canceled.emit()
 
-func shoot(gun_type):
+func apply_gun_velocity(gun_type):
 	match gun_type:
-		player_input.guns.REVOLVER:
+		player_guns.guns.REVOLVER:
 			velocity = crosshair.get_trajectory() * 700
-		player_input.guns.SHOTGUN:
+		player_guns.guns.SHOTGUN:
 			velocity = crosshair.get_trajectory() * 1000
-		player_input.guns.RIFLE:
+		player_guns.guns.RIFLE:
 			velocity = crosshair.get_trajectory() * 1400
- 
-	print(crosshair.get_trajectory())
 
 # checks
 func check_collisions() -> void:

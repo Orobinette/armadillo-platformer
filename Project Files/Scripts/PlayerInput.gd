@@ -1,12 +1,10 @@
 extends Node
 
 @export var player_movement: Node
+@export var player_guns: Node
 
 var state
 enum states {WALKING, ROLLING}
-
-@onready var selected_gun = guns.REVOLVER
-enum guns {REVOLVER, SHOTGUN, RIFLE}
 
 var input_direction: int = 0
 var dir_facing: int = -1
@@ -56,13 +54,13 @@ func get_input():
 
 
 	if Input.is_action_just_pressed("select revolver"):
-		selected_gun = guns.REVOLVER
+		player_guns.selected_gun = player_guns.guns.REVOLVER
 		print("selected_gun")
 	if Input.is_action_just_pressed("select shotgun"):
-		selected_gun = guns.SHOTGUN
+		player_guns.selected_gun = player_guns.guns.SHOTGUN
 		print("selected_gun")
 	if Input.is_action_just_pressed("select rifle"):
-		selected_gun = guns.RIFLE
+		player_guns.selected_gun = player_guns.guns.RIFLE
 		print("selected_gun")
 
 	if Input.is_action_just_pressed("air cancel"):
@@ -84,19 +82,10 @@ func get_input_rolling():
 	input_direction = 0
 
 	if Input.is_action_just_pressed("shoot"):
-		match selected_gun:
-			guns.REVOLVER:
-				print("Fire: Revolver")
-				player_movement.shoot(guns.REVOLVER)
-			guns.SHOTGUN:
-				player_movement.shoot(guns.SHOTGUN)
-				print("Fire: Shotgun")
-			guns.RIFLE:
-				player_movement.shoot(guns.RIFLE)
-				print("Fire: Rifle")
+		player_guns.shoot(player_guns.selected_gun)
 	elif Input.is_action_just_pressed("quickfire revolver"):
-		player_movement.shoot(guns.REVOLVER)
+		player_guns.shoot(player_guns.guns.REVOLVER)
 	elif Input.is_action_just_pressed("quickfire shotgun"):
-		player_movement.shoot(guns.SHOTGUN)
+		player_guns.shoot(player_guns.guns.SHOTGUN)
 	elif Input.is_action_just_pressed("quickfire rifle"):
-		player_movement.shoot(guns.RIFLE)
+		player_guns.shoot(player_guns.guns.RIFLE)

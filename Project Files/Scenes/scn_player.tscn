@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=9 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
 [ext_resource type="Script" path="res://Scripts/PlayerInput.gd" id="2_g7jqk"]
+[ext_resource type="Script" path="res://Scripts/PlayerGuns.gd" id="3_2i14l"]
 [ext_resource type="Script" path="res://Scripts/PlayerAnimations.gd" id="3_8ixvj"]
 [ext_resource type="Texture2D" uid="uid://m12l5ysl8f7s" path="res://Art/Sprites/Dillo/spr_crosshair.png" id="5_naerd"]
 [ext_resource type="Script" path="res://Scripts/Crosshair.gd" id="6_itcpb"]
@@ -10,9 +11,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(132, 132)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input", "crosshair")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input", "player_guns", "crosshair")]
 script = ExtResource("1_8nrtw")
 player_input = NodePath("Input")
+player_guns = NodePath("Guns")
 crosshair = NodePath("Crosshair")
 max_movement_speed = 500.0
 seconds_to_accelerate = 1.0
@@ -25,9 +27,15 @@ max_upward_velocity = -700.0
 hang_time_frames = 1
 air_cancel_velocity = 200.0
 
-[node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement")]
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns")]
 script = ExtResource("2_g7jqk")
 player_movement = NodePath("..")
+player_guns = NodePath("../Guns")
+
+[node name="Guns" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
+script = ExtResource("3_2i14l")
+player_movement = NodePath("..")
+player_input = NodePath("../Input")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sdmxp")
@@ -48,6 +56,7 @@ player_input = NodePath("../Input")
 [connection signal="air_canceled" from="." to="Anim" method="_on_air_cancel"]
 [connection signal="deccelerated" from="." to="Anim" method="_on_deccelerate"]
 [connection signal="falling" from="." to="Anim" method="_on_fall"]
+[connection signal="grounded" from="." to="Guns" method="_on_grounded"]
 [connection signal="idled" from="." to="Anim" method="_on_idle"]
 [connection signal="jumped" from="." to="Anim" method="_on_jump"]
 [connection signal="rolled" from="Input" to="Anim" method="_on_rolled"]
