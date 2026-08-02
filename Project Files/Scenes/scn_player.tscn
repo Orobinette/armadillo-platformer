@@ -42,7 +42,7 @@ shape = SubResource("RectangleShape2D_sdmxp")
 
 [node name="Anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"idle"
+animation = &"air_cancel_L"
 script = ExtResource("3_8ixvj")
 
 [node name="Crosshair" type="Sprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
