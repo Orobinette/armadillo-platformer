@@ -18,6 +18,7 @@ var friction: float
 
 @export_group("Vertical Movement")
 var is_grounded: bool = false
+
 @export_subgroup("Jump")
 @export var jump_height: float
 @export var jump_seconds_to_peak: float
@@ -155,13 +156,21 @@ func air_cancel():
 	air_canceled.emit()
 
 func apply_gun_velocity(gun_type):
+	var impulse
 	match gun_type:
 		player_guns.guns.REVOLVER:
-			velocity = crosshair.get_trajectory() * 700
+			impulse = 700
 		player_guns.guns.SHOTGUN:
-			velocity = crosshair.get_trajectory() * 1000
+			impulse = 1000
 		player_guns.guns.RIFLE:
-			velocity = crosshair.get_trajectory() * 1400
+			impulse = 1400
+
+	var gun_velocity = crosshair.get_trajectory() * impulse
+	if sign(velocity.x) != sign(gun_velocity.x):
+		velocity = gun_velocity
+	else:
+		velocity = Vector2(velocity.x + gun_velocity.x, gun_velocity.y)
+		
 
 # checks
 func check_collisions() -> void:

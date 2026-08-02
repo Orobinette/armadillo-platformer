@@ -4,7 +4,7 @@ extends Node2D
 @export var player_input: Node
 
 var radians = 0
-@onready var radian_step = PI / 64
+@onready var radian_step = PI / 50
 var offset = 150
 
 var dir = 1
