@@ -170,6 +170,8 @@ func apply_gun_velocity(gun_type):
 		velocity = gun_velocity
 	else:
 		velocity = Vector2(velocity.x + gun_velocity.x, gun_velocity.y)
+
+	player_input.dir_facing = sign(velocity.x)
 		
 
 # checks

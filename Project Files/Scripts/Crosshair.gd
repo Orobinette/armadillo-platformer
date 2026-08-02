@@ -30,4 +30,8 @@ func _on_walked():
 func _on_rolled():
 	show()
 	dir = sign(player_input.dir_facing)
-	#position = Vector2(150*dir,0)
+	if dir == 1:
+		radians = -PI/4
+	else:
+		radians = -3*PI/4
+	position = Vector2(cos(radians), sin(radians)) * offset
