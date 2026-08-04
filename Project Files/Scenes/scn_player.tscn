@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Crosshair.gd" id="6_itcpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
-size = Vector2(132, 132)
+size = Vector2(132, 135)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input", "player_guns", "crosshair")]
 script = ExtResource("1_8nrtw")
@@ -38,11 +38,12 @@ player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_sdmxp")
 
 [node name="Anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"air_cancel_L"
+animation = &"idle_L"
 script = ExtResource("3_8ixvj")
 
 [node name="Crosshair" type="Sprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
