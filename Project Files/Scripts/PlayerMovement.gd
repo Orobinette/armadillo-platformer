@@ -40,6 +40,13 @@ var is_grounded: bool = false
 @export_group("Air Cancel")
 @export var air_cancel_velocity: float
 
+@export_group("Shooting")
+@export var revolver_impulse: float
+@export var shotgun_impulse: float
+@export var rifle_impulse: float
+@export var gun_impulse_frames: float
+var current_gun_impulse_frame: float
+
 
 signal idled
 signal accelerated(input_direction)
@@ -111,17 +118,26 @@ func apply_friction() -> void:
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
-	if not is_grounded:
-		if velocity.y < 0 and is_jumping: #if rising
-			velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
-			jumped.emit()
-			
-		elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime
-			current_hangtime_frame += 1
+	if is_grounded:
+		return
 
-		else: 
-			velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
-			falling.emit()
+	if current_gun_impulse_frame < gun_impulse_frames:
+		current_gun_impulse_frame += 1
+		return
+
+	if velocity.y < 0 and is_jumping: #if rising
+		velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
+		jumped.emit()
+		print("is jumping")
+		
+	elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime
+		print("hangtime")
+		current_hangtime_frame += 1
+
+	else: 
+		velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
+		falling.emit()
+		print("falling")
 
 func jump() -> void:
 	if is_grounded:
@@ -159,11 +175,11 @@ func apply_gun_velocity(gun_type):
 	var impulse
 	match gun_type:
 		player_guns.guns.REVOLVER:
-			impulse = 700
+			impulse = revolver_impulse
 		player_guns.guns.SHOTGUN:
-			impulse = 1000
+			impulse = shotgun_impulse
 		player_guns.guns.RIFLE:
-			impulse = 1400
+			impulse = rifle_impulse
 
 	var gun_velocity = crosshair.get_trajectory() * impulse
 	if sign(velocity.x) != sign(gun_velocity.x):
@@ -172,6 +188,7 @@ func apply_gun_velocity(gun_type):
 		velocity = Vector2(velocity.x + gun_velocity.x, gun_velocity.y)
 
 	player_input.dir_facing = sign(velocity.x)
+	current_gun_impulse_frame = 0
 		
 
 # checks

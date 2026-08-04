@@ -24,19 +24,14 @@ func shoot(gun):
 			player_movement.apply_gun_velocity(guns.REVOLVER)
 			if not player_movement.is_grounded:
 				current_ammo_revolver -= 1
-			print("Fire: Revolver")
 		guns.SHOTGUN:
 			player_movement.apply_gun_velocity(guns.SHOTGUN)
 			if not player_movement.is_grounded:
 				current_ammo_shotgun -=1 
-			print("Fire: Shotgun")
 		guns.RIFLE:
 			player_movement.apply_gun_velocity(guns.RIFLE)
 			if not player_movement.is_grounded:
 				current_ammo_rifle -= 1
-			print("Fire: Rifle")
-
-	print(current_ammo_revolver, ", ", current_ammo_shotgun, ", ", current_ammo_rifle)
 				
 func can_shoot(gun) -> bool:
 	match gun:

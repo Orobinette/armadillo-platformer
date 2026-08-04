@@ -26,6 +26,10 @@ jump_seconds_to_descent = 0.4
 max_upward_velocity = -700.0
 hang_time_frames = 1
 air_cancel_velocity = 200.0
+revolver_impulse = 700.0
+shotgun_impulse = 1000.0
+rifle_impulse = 1400.0
+gun_impulse_frames = 5.0
 
 [node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns")]
 script = ExtResource("2_g7jqk")
