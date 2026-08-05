@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_jumping: bool = false
 
 @export_group("Horizontal Movement")
+var last_x_velocity
 @export var max_movement_speed: float
 @export var seconds_to_accelerate: float
 @export var seconds_to_decelerate: float
@@ -74,7 +75,13 @@ func _physics_process(delta):
 
 #Horizontal Movement
 func calculate_horizontal_movement() -> void:
+	if velocity.x != 0:
+		last_x_velocity = velocity.x
+
 	if player_input.state == player_input.states.ROLLING:
+		if is_on_wall():
+			velocity.x = -last_x_velocity/5
+
 		return
 
 	if velocity.x == 0:
@@ -103,18 +110,18 @@ func slow_to_max_speed() -> void:
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
 
 func accelerate() -> void:
-	print("accel")
+	##print("accel")
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
 	accelerated.emit(player_input.input_direction)
 
 func decelerate() -> void:
-	print("deccel")
+	##print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
 	deccelerated.emit(player_input.dir_facing)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
-	print("fric")
+	##print("fric")
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
@@ -128,16 +135,16 @@ func calculate_gravity(delta) -> void:
 	if velocity.y < 0 and is_jumping: #if rising
 		velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
 		jumped.emit()
-		print("is jumping")
+		#print("is jumping")
 		
 	elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime
-		print("hangtime")
+		#print("hangtime")
 		current_hangtime_frame += 1
 
 	else: 
 		velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
 		falling.emit()
-		print("falling")
+		#print("falling")
 
 func jump() -> void:
 	if is_grounded:
