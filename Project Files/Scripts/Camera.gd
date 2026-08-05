@@ -1,14 +1,31 @@
 extends Camera2D
-
+'''
 @export var player: CharacterBody2D
-var y_offset: float = 351
+
+var offset_up: float = -270
+var offset_down: float = 270
+var offset_left: float = -640
+var offset_right: float = 640
 
 func _ready():
-	position = player.position - Vector2(0,y_offset)
+	position = Vector2.ZERO
 
 func _process(delta):
-	print(sign(player.velocity.x))
+	if position.y < offset_up:
+		position.y = offset_up
+
+	if position.y < offset_down:
+		position.y= offset_down
+	if position.x < offset_left:
+		position.x = offset_left
+
+	if position.x > offset_right:
+		position.x = offset_right
+
+	print(position)
+	
 	if sign(player.velocity.x) == sign(player.position.x-position.x):
 		position.x = player.position.x
 	
 	position.y = player.position.y-y_offset
+	'''

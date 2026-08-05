@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=10 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
 [ext_resource type="Script" path="res://Scripts/PlayerInput.gd" id="2_g7jqk"]
+[ext_resource type="PackedScene" uid="uid://bggaukbhpdrw" path="res://Scenes/scn_camera.tscn" id="2_w7dl2"]
 [ext_resource type="Script" path="res://Scripts/PlayerGuns.gd" id="3_2i14l"]
 [ext_resource type="Script" path="res://Scripts/PlayerAnimations.gd" id="3_8ixvj"]
 [ext_resource type="Texture2D" uid="uid://m12l5ysl8f7s" path="res://Art/Sprites/Dillo/spr_crosshair.png" id="5_naerd"]
 [ext_resource type="Script" path="res://Scripts/Crosshair.gd" id="6_itcpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
-size = Vector2(132, 135)
+size = Vector2(135, 135)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_input", "player_guns", "crosshair")]
 script = ExtResource("1_8nrtw")
@@ -30,6 +31,10 @@ revolver_impulse = 700.0
 shotgun_impulse = 1000.0
 rifle_impulse = 1400.0
 gun_impulse_frames = 5.0
+
+[node name="Camera" parent="." instance=ExtResource("2_w7dl2")]
+position_smoothing_speed = 30.0
+script = null
 
 [node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns")]
 script = ExtResource("2_g7jqk")
