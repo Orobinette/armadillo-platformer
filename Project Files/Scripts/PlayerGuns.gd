@@ -21,14 +21,17 @@ func shoot(gun):
 
 	match gun:
 		guns.REVOLVER:
+			HapticManager.shoot("revolver")
 			player_movement.apply_gun_velocity(guns.REVOLVER)
 			if not player_movement.is_grounded:
 				current_ammo_revolver -= 1
 		guns.SHOTGUN:
+			HapticManager.shoot("shotgun")
 			player_movement.apply_gun_velocity(guns.SHOTGUN)
 			if not player_movement.is_grounded:
 				current_ammo_shotgun -=1 
 		guns.RIFLE:
+			HapticManager.shoot("rifle")
 			player_movement.apply_gun_velocity(guns.RIFLE)
 			if not player_movement.is_grounded:
 				current_ammo_rifle -= 1

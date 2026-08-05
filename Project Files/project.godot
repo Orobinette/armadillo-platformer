@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/scn_test_environment.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+HapticManager="*res://Scripts/Persistant/HapticManager.gd"
+
 [display]
 
 window/size/viewport_width=1920
