@@ -134,7 +134,7 @@ func calculate_gravity(delta) -> void:
 
 	if velocity.y < 0 and is_jumping: #if rising
 		velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
-		jumped.emit()
+		jumped.emit(player_input.dir_facing)
 		#print("is jumping")
 		
 	elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime

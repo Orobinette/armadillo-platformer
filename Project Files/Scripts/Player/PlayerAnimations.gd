@@ -22,8 +22,11 @@ func _on_deccelerate(input_direction):
 	elif input_direction == -1:
 		play("decelerate_L")
 
-func _on_jump():
-	play("temp")
+func _on_jump(input_direction):
+	if input_direction == 1:
+		play("jump_R")
+	elif input_direction == -1:
+		play("jump_L")
 
 func _on_fall():
 	play("temp")

@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=46 format=3 uid="uid://bnvldq7p7k5li"]
+[gd_resource type="SpriteFrames" load_steps=49 format=3 uid="uid://bnvldq7p7k5li"]
 
 [ext_resource type="Texture2D" uid="uid://bflxdywmnmpnw" path="res://Art/Sprites/Dillo/sprsheet_idle.png" id="1_2fx1g"]
 [ext_resource type="Texture2D" uid="uid://c0dw3r8l4khr4" path="res://Art/Sprites/Dillo/sprsheet_dillo_aircancel_L.png" id="1_6qdks"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://div730i2lwrek" path="res://Art/Sprites/Dillo/sprsheet_run_left.png" id="2_t51nl"]
 [ext_resource type="Texture2D" uid="uid://bsnr82dfs72im" path="res://Art/Sprites/Dillo/sprsheet_run_right.png" id="3_c1g1c"]
 [ext_resource type="Texture2D" uid="uid://jyw8anuehupe" path="res://Art/Sprites/Dillo/sprsheet_idle_right.png" id="4_w4vw7"]
+[ext_resource type="Texture2D" uid="uid://y05wsj2attee" path="res://Art/Sprites/Dillo/spr_sheet_dillo_jump_left.png" id="7_yug86"]
+[ext_resource type="Texture2D" uid="uid://bm3h4fix1uhta" path="res://Art/Sprites/Dillo/spr_sheet_dillo_jump_right.png" id="8_f237b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qqqw"]
 atlas = ExtResource("1_6qdks")
@@ -89,6 +91,10 @@ region = Rect2(1800, 0, 300, 300)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sse7l"]
 atlas = ExtResource("4_w4vw7")
 region = Rect2(2100, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew51h"]
+atlas = ExtResource("7_yug86")
+region = Rect2(0, 0, 300, 300)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6jao8"]
 atlas = ExtResource("2_t51nl")
@@ -251,6 +257,22 @@ animations = [{
 "loop": true,
 "name": &"idle_R",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew51h")
+}],
+"loop": false,
+"name": &"jump_L",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_f237b")
+}],
+"loop": false,
+"name": &"jump_R",
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
