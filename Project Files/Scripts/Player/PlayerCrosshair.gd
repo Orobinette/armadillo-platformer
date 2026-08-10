@@ -4,7 +4,7 @@ extends Node2D
 @export var player_input: Node
 
 var radians = 0
-@onready var radian_step = PI / 50
+@onready var radian_step = PI / 25
 var offset = 150
 
 var dir = 1
@@ -12,7 +12,7 @@ var dir = 1
 func _ready():
 	position = Vector2(0,0)
 
-func _process(delta):
+func _physics_process(delta):
 	if radians == 2 * PI:
 		radians = 0
 

@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/PlayerGuns.gd" id="3_2i14l"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerAnimations.gd" id="3_8ixvj"]
 [ext_resource type="Texture2D" uid="uid://m12l5ysl8f7s" path="res://Art/Sprites/Dillo/spr_crosshair.png" id="5_naerd"]
-[ext_resource type="Script" path="res://Scripts/Crosshair.gd" id="6_itcpb"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerCrosshair.gd" id="6_itcpb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(135, 135)
