@@ -4,7 +4,7 @@ extends Node2D
 @export var player_input: Node
 
 var radians = 0
-@onready var radian_step = PI / 50
+@onready var radian_step = 2.5 * PI
 var offset = 150
 
 var dir = 1
@@ -16,7 +16,7 @@ func _process(delta):
 	if radians == 2 * PI:
 		radians = 0
 
-	radians += radian_step * dir
+	radians += radian_step * dir * delta
 
 	position = Vector2(cos(radians), sin(radians)) * offset
 	
