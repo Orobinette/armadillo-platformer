@@ -2,6 +2,8 @@ extends Node
 
 @export var player_movement: Node
 @export var player_guns: Node
+@export var collision_walk: CollisionShape2D
+@export var collision_roll: CollisionShape2D
 
 var state
 enum states {WALKING, ROLLING}
@@ -27,10 +29,14 @@ func _process(_delta):
 
 func get_input():
 	if Input.is_action_just_pressed("shell"):
+		collision_walk.disabled = true
+		collision_roll.disabled = false
 		state = states.ROLLING
-		rolled.emit()
+		rolled.emit(dir_facing)
 		#print("roll")
 	elif Input.is_action_just_released("shell"):
+		collision_walk.disabled = false
+		collision_roll.disabled = true
 		state = states.WALKING
 		walked.emit()
 		#print("walk")

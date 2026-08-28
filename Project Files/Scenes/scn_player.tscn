@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://coli2cfjaaehe"]
+[gd_scene load_steps=11 format=3 uid="uid://coli2cfjaaehe"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.gd" id="1_8nrtw"]
 [ext_resource type="SpriteFrames" uid="uid://bnvldq7p7k5li" path="res://Art/Sprites/Dillo/sprfr_dillo.tres" id="2_8apyp"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Scripts/Player/PlayerAnimations.gd" id="3_8ixvj"]
 [ext_resource type="Texture2D" uid="uid://m12l5ysl8f7s" path="res://Art/Sprites/Dillo/spr_crosshair.png" id="5_naerd"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCrosshair.gd" id="6_itcpb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbbdc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sdmxp"]
 size = Vector2(135, 135)
@@ -36,24 +38,32 @@ gun_impulse_frames = 5.0
 position_smoothing_speed = 30.0
 script = null
 
-[node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns")]
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns", "collision_walk", "collision_roll")]
 script = ExtResource("2_g7jqk")
 player_movement = NodePath("..")
 player_guns = NodePath("../Guns")
+collision_walk = NodePath("../Collision walk")
+collision_roll = NodePath("../Collision roll")
 
 [node name="Guns" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
 script = ExtResource("3_2i14l")
 player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Anim" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("player_input")]
+sprite_frames = ExtResource("2_8apyp")
+animation = &"roll_L"
+script = ExtResource("3_8ixvj")
+player_input = NodePath("../Input")
+
+[node name="Collision roll" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(4.035, 4.035)
+shape = SubResource("CircleShape2D_qbbdc")
+
+[node name="Collision walk" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_sdmxp")
-
-[node name="Anim" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_8apyp")
-animation = &"idle_L"
-script = ExtResource("3_8ixvj")
 
 [node name="Crosshair" type="Sprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
 position = Vector2(100, 0)
@@ -72,3 +82,4 @@ player_input = NodePath("../Input")
 [connection signal="rolled" from="Input" to="Anim" method="_on_rolled"]
 [connection signal="rolled" from="Input" to="Crosshair" method="_on_rolled"]
 [connection signal="walked" from="Input" to="Crosshair" method="_on_walked"]
+[connection signal="shot" from="Guns" to="Anim" method="_on_shoot"]

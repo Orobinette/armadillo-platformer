@@ -14,6 +14,8 @@ const MAX_AMMO_RIFLE = 1
 @onready var current_ammo_shotgun = MAX_AMMO_SHOTGUN
 @onready var current_ammo_rifle = MAX_AMMO_RIFLE
 
+signal shot
+
 
 func shoot(gun):
 	if not can_shoot(gun):
@@ -35,6 +37,8 @@ func shoot(gun):
 			player_movement.apply_gun_velocity(guns.RIFLE)
 			if not player_movement.is_grounded:
 				current_ammo_rifle -= 1
+
+	shot.emit()
 				
 func can_shoot(gun) -> bool:
 	match gun:

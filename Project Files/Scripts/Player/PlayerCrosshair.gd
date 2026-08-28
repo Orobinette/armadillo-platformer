@@ -4,7 +4,7 @@ extends Node2D
 @export var player_input: Node
 
 var radians = 0
-@onready var radian_step = 2.5 * PI
+@onready var radian_step = 3*PI
 var offset = 150
 
 var dir = 1
@@ -27,7 +27,7 @@ func get_trajectory() -> Vector2:
 
 func _on_walked():
 	hide()
-func _on_rolled():
+func _on_rolled(_dir):
 	show()
 	dir = sign(player_input.dir_facing)
 	if dir == 1:
