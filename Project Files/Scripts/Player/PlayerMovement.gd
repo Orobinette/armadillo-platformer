@@ -52,7 +52,7 @@ var current_gun_impulse_frame: float
 signal idled
 signal accelerated(input_direction)
 signal deccelerated(input_direction)
-signal jumped
+signal jumped(input_direction)
 signal falling
 signal air_canceled
 signal grounded
@@ -85,7 +85,6 @@ func calculate_horizontal_movement() -> void:
 		return
 
 	if velocity.x == 0:
-		idled.emit(player_input.dir_facing)
 		thrust()
 
 	elif player_input.input_direction == 0 and is_grounded:
@@ -104,6 +103,7 @@ func calculate_horizontal_movement() -> void:
 func thrust() -> void:
 	#print("thrust")
 	velocity.x = 0.1 * player_input.input_direction
+	idled.emit(player_input.dir_facing)
 
 func slow_to_max_speed() -> void:
 	#print("slow")
@@ -112,16 +112,17 @@ func slow_to_max_speed() -> void:
 func accelerate() -> void:
 	##print("accel")
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
-	accelerated.emit(player_input.input_direction)
+	if is_grounded:
+		accelerated.emit(player_input.input_direction)
 
 func decelerate() -> void:
-	##print("deccel")
+	#print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
 	deccelerated.emit(player_input.dir_facing)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
-	##print("fric")
+	#print("fric")
 
 #Vertical Movement
 func calculate_gravity(delta) -> void:
@@ -134,7 +135,6 @@ func calculate_gravity(delta) -> void:
 
 	if velocity.y < 0 and is_jumping: #if rising
 		velocity.y = move_toward(velocity.y, 0, jump_gravity * delta)
-		jumped.emit(player_input.dir_facing)
 		#print("is jumping")
 		
 	elif current_hangtime_frame < hang_time_frames and is_jumping: #Hangtime
@@ -143,13 +143,14 @@ func calculate_gravity(delta) -> void:
 
 	else: 
 		velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
-		falling.emit()
+		falling.emit(player_input.dir_facing)
 		#print("falling")
 
 func jump() -> void:
 	if is_grounded:
 		velocity.y = jump_velocity
 		is_grounded = false
+		jumped.emit(player_input.dir_facing)
 
 func coyote_time() -> void:
 	if is_on_floor() and current_coyote_time_frame != 0:

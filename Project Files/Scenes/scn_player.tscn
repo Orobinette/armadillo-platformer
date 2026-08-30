@@ -52,7 +52,9 @@ player_input = NodePath("../Input")
 
 [node name="Anim" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("player_input")]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"roll_L"
+animation = &"jump_L"
+frame = 4
+frame_progress = 1.0
 script = ExtResource("3_8ixvj")
 player_input = NodePath("../Input")
 

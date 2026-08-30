@@ -25,17 +25,23 @@ func _on_deccelerate(input_direction):
 		play("decelerate_L")
 
 func _on_jump(input_direction):
-	if animation == "roll_R" or animation == "roll_L":
+	if animation == "roll_R" or animation == "roll_L" or animation == "jump_L" or animation == "jump_R":
 		return
+	#if animation == "jump_L" or animation == "jump_R":
+	#	return
+
 	if input_direction == 1:
 		play("jump_R")
 	elif input_direction == -1:
 		play("jump_L")
 
-func _on_fall():
+func _on_fall(input_direction):
 	if animation == "roll_R" or animation == "roll_L":
 		return
-	play("temp")
+	if input_direction == 1:
+		play("fall_R")
+	elif input_direction == -1:
+		play("fall_L")
 
 func _on_air_cancel():
 	play("temp")
