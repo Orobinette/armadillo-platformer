@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d20oigl1xruqb"
-path="res://.godot/imported/sprsheet_dillo_jump_left.png-0222a657ee2bcebaca4bdf2a6b18da48.ctex"
+uid="uid://cyuud45o5co7x"
+path="res://.godot/imported/spr_dillo_decelerate_L.png-b107bf0fd9940793002ac06a800920dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Sprites/Dillo/sprsheet_dillo_jump_left.png"
-dest_files=["res://.godot/imported/sprsheet_dillo_jump_left.png-0222a657ee2bcebaca4bdf2a6b18da48.ctex"]
+source_file="res://Art/Sprites/Dillo/spr_dillo_decelerate_L.png"
+dest_files=["res://.godot/imported/spr_dillo_decelerate_L.png-b107bf0fd9940793002ac06a800920dd.ctex"]
 
 [params]
 

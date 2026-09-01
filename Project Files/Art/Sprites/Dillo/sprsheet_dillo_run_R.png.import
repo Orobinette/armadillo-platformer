@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr3xljcf01fhi"
-path="res://.godot/imported/spr_decelerate_R.png-bd0bc01a1ab3eac3744fced720f4ec40.ctex"
+uid="uid://bsnr82dfs72im"
+path="res://.godot/imported/sprsheet_dillo_run_R.png-64b61f412c865487a1425911c54cf58c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Sprites/Dillo/spr_decelerate_R.png"
-dest_files=["res://.godot/imported/spr_decelerate_R.png-bd0bc01a1ab3eac3744fced720f4ec40.ctex"]
+source_file="res://Art/Sprites/Dillo/sprsheet_dillo_run_R.png"
+dest_files=["res://.godot/imported/sprsheet_dillo_run_R.png-64b61f412c865487a1425911c54cf58c.ctex"]
 
 [params]
 

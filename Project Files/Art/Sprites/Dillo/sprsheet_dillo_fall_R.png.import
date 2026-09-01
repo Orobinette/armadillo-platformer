@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bflxdywmnmpnw"
-path="res://.godot/imported/sprsheet_idle.png-2f9201d61a26a3cfbf9a4bfbfab75579.ctex"
+uid="uid://b64licut23qo1"
+path="res://.godot/imported/sprsheet_dillo_fall_R.png-023ea767d7806eee0acea534db1f1510.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Sprites/Dillo/sprsheet_idle.png"
-dest_files=["res://.godot/imported/sprsheet_idle.png-2f9201d61a26a3cfbf9a4bfbfab75579.ctex"]
+source_file="res://Art/Sprites/Dillo/sprsheet_dillo_fall_R.png"
+dest_files=["res://.godot/imported/sprsheet_dillo_fall_R.png-023ea767d7806eee0acea534db1f1510.ctex"]
 
 [params]
 
