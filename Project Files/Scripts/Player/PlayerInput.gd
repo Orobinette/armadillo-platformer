@@ -58,17 +58,6 @@ func get_input():
 		player_movement.jump()
 		current_jump_buffer_frame += 1 
 
-
-	if Input.is_action_just_pressed("select revolver"):
-		player_guns.selected_gun = player_guns.guns.REVOLVER
-		print("selected_gun")
-	if Input.is_action_just_pressed("select shotgun"):
-		player_guns.selected_gun = player_guns.guns.SHOTGUN
-		print("selected_gun")
-	if Input.is_action_just_pressed("select rifle"):
-		player_guns.selected_gun = player_guns.guns.RIFLE
-		print("selected_gun")
-
 	if Input.is_action_just_pressed("air cancel"):
 		player_movement.air_cancel()
 		state = states.WALKING
@@ -88,11 +77,9 @@ func get_input_walking():
 func get_input_rolling():
 	input_direction = 0
 
-	if Input.is_action_just_pressed("shoot"):
-		player_guns.shoot(player_guns.selected_gun)
-	elif Input.is_action_just_pressed("quickfire revolver"):
+	if Input.is_action_just_pressed("fire revolver"):
 		player_guns.shoot(player_guns.guns.REVOLVER)
-	elif Input.is_action_just_pressed("quickfire shotgun"):
+	elif Input.is_action_just_pressed("fire shotgun"):
 		player_guns.shoot(player_guns.guns.SHOTGUN)
-	elif Input.is_action_just_pressed("quickfire rifle"):
+	elif Input.is_action_just_pressed("fire rifle"):
 		player_guns.shoot(player_guns.guns.RIFLE)
