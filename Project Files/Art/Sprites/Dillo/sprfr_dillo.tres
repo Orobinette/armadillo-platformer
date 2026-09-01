@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=98 format=3 uid="uid://bnvldq7p7k5li"]
+[gd_resource type="SpriteFrames" load_steps=100 format=3 uid="uid://bnvldq7p7k5li"]
 
 [ext_resource type="Texture2D" uid="uid://c0dw3r8l4khr4" path="res://Art/Sprites/Dillo/sprsheet_dillo_aircancel_L.png" id="1_6qdks"]
 [ext_resource type="Texture2D" uid="uid://cyuud45o5co7x" path="res://Art/Sprites/Dillo/spr_dillo_decelerate_L.png" id="1_v3554"]
@@ -79,6 +79,14 @@ region = Rect2(1200, 0, 300, 300)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5dnal"]
 atlas = ExtResource("6_8k7ul")
 region = Rect2(1500, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mctkq"]
+atlas = ExtResource("9_e7hdj")
+region = Rect2(1200, 0, 300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvtov"]
+atlas = ExtResource("10_bc803")
+region = Rect2(1200, 0, 300, 300)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cv1qh"]
 atlas = ExtResource("5_gynh0")
@@ -404,7 +412,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_jy0gi")
 }],
 "loop": true,
-"name": &"fall_L",
+"name": &"fall_long_L",
 "speed": 8.0
 }, {
 "frames": [{
@@ -427,8 +435,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_5dnal")
 }],
 "loop": true,
-"name": &"fall_R",
+"name": &"fall_long_R",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mctkq")
+}],
+"loop": true,
+"name": &"fall_short_L",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvtov")
+}],
+"loop": true,
+"name": &"fall_short_R",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

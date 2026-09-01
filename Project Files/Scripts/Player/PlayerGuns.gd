@@ -58,5 +58,3 @@ func _on_grounded():
 	current_ammo_revolver = MAX_AMMO_REVOLVER
 	current_ammo_shotgun = MAX_AMMO_SHOTGUN
 	current_ammo_rifle = MAX_AMMO_RIFLE
-
-	print(current_ammo_revolver, ", ", current_ammo_shotgun, ", ", current_ammo_rifle)

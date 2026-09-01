@@ -56,6 +56,7 @@ animation = &"air_cancel_L"
 script = ExtResource("3_8ixvj")
 player_movement = NodePath("..")
 player_input = NodePath("../Input")
+short_fall_time = 1.0
 
 [node name="Collision roll" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
@@ -74,6 +75,7 @@ player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
 [connection signal="grounded" from="." to="Guns" method="_on_grounded"]
+[connection signal="grounded" from="." to="Anim" method="_on_grounded"]
 [connection signal="rolled" from="Input" to="Anim" method="_on_roll_pressed"]
 [connection signal="rolled" from="Input" to="Crosshair" method="_on_rolled"]
 [connection signal="walked" from="Input" to="Anim" method="_on_roll_release"]
