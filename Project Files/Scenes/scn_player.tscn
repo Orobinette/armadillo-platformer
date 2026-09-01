@@ -50,12 +50,11 @@ script = ExtResource("3_2i14l")
 player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
-[node name="Anim" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("player_input")]
+[node name="Anim" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"jump_L"
-frame = 4
-frame_progress = 1.0
+animation = &"air_cancel_L"
 script = ExtResource("3_8ixvj")
+player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
 [node name="Collision roll" type="CollisionShape2D" parent="."]
@@ -74,14 +73,9 @@ script = ExtResource("6_itcpb")
 player_movement = NodePath("..")
 player_input = NodePath("../Input")
 
-[connection signal="accelerated" from="." to="Anim" method="_on_accelerate"]
-[connection signal="air_canceled" from="." to="Anim" method="_on_air_cancel"]
-[connection signal="deccelerated" from="." to="Anim" method="_on_deccelerate"]
-[connection signal="falling" from="." to="Anim" method="_on_fall"]
 [connection signal="grounded" from="." to="Guns" method="_on_grounded"]
-[connection signal="idled" from="." to="Anim" method="_on_idle"]
-[connection signal="jumped" from="." to="Anim" method="_on_jump"]
-[connection signal="rolled" from="Input" to="Anim" method="_on_rolled"]
+[connection signal="rolled" from="Input" to="Anim" method="_on_roll_pressed"]
 [connection signal="rolled" from="Input" to="Crosshair" method="_on_rolled"]
+[connection signal="walked" from="Input" to="Anim" method="_on_roll_release"]
 [connection signal="walked" from="Input" to="Crosshair" method="_on_walked"]
 [connection signal="shot" from="Guns" to="Anim" method="_on_shoot"]

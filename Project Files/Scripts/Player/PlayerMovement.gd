@@ -49,12 +49,6 @@ var is_grounded: bool = false
 var current_gun_impulse_frame: float
 
 
-signal idled
-signal accelerated(input_direction)
-signal deccelerated(input_direction)
-signal jumped(input_direction)
-signal falling
-signal air_canceled
 signal grounded
 
 
@@ -103,7 +97,6 @@ func calculate_horizontal_movement() -> void:
 func thrust() -> void:
 	#print("thrust")
 	velocity.x = 0.1 * player_input.input_direction
-	idled.emit(player_input.dir_facing)
 
 func slow_to_max_speed() -> void:
 	#print("slow")
@@ -112,13 +105,10 @@ func slow_to_max_speed() -> void:
 func accelerate() -> void:
 	##print("accel")
 	velocity.x = move_toward(velocity.x, max_movement_speed * player_input.input_direction, acceleration)
-	if is_grounded:
-		accelerated.emit(player_input.input_direction)
 
 func decelerate() -> void:
 	#print("deccel")
 	velocity.x = move_toward(velocity.x, 0, deceleration)
-	deccelerated.emit(player_input.dir_facing)
 
 func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
@@ -143,14 +133,12 @@ func calculate_gravity(delta) -> void:
 
 	else: 
 		velocity.y = move_toward(velocity.y, fall_gravity, fall_gravity * delta) #Apply gravity
-		falling.emit(player_input.dir_facing)
 		#print("falling")
 
 func jump() -> void:
 	if is_grounded:
 		velocity.y = jump_velocity
 		is_grounded = false
-		jumped.emit(player_input.dir_facing)
 
 func coyote_time() -> void:
 	if is_on_floor() and current_coyote_time_frame != 0:
@@ -177,7 +165,6 @@ func air_cancel():
 	#velocity.x = air_cancel_velocity * -sign(velocity.x)
 	velocity.x = air_cancel_velocity * player_input.input_direction
 	player_input.current_air_cancel_buffer_frame = 0
-	air_canceled.emit()
 
 func apply_gun_velocity(gun_type):
 	var impulse

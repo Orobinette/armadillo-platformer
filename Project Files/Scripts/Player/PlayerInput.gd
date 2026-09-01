@@ -20,7 +20,7 @@ var dir_facing: int = -1
 @onready var current_air_cancel_buffer_frame = air_cancel_buffer_frames
 
 
-signal rolled
+signal rolled(input_direction)
 signal walked
 
 
@@ -32,7 +32,7 @@ func get_input():
 		collision_walk.disabled = true
 		collision_roll.disabled = false
 		state = states.ROLLING
-		rolled.emit(dir_facing)
+		rolled.emit(input_direction)
 		#print("roll")
 	elif Input.is_action_just_released("shell"):
 		collision_walk.disabled = false
