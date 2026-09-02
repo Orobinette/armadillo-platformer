@@ -18,6 +18,7 @@ config/icon="res://Art/dillo thumbnail.png"
 [autoload]
 
 HapticManager="*res://Scripts/Persistant/HapticManager.gd"
+AudioManager="*res://Scripts/Persistant/AudioManager.gd"
 
 [display]
 

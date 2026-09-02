@@ -55,6 +55,9 @@ func can_shoot(gun) -> bool:
 	return false
 
 func _on_grounded():
+	if current_ammo_revolver < MAX_AMMO_REVOLVER or current_ammo_shotgun < MAX_AMMO_SHOTGUN or current_ammo_rifle < MAX_AMMO_RIFLE:
+		AudioManager._on_reload()
+
 	current_ammo_revolver = MAX_AMMO_REVOLVER
 	current_ammo_shotgun = MAX_AMMO_SHOTGUN
 	current_ammo_rifle = MAX_AMMO_RIFLE
