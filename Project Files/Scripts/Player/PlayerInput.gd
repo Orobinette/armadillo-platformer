@@ -59,10 +59,11 @@ func get_input():
 		current_jump_buffer_frame += 1 
 
 	if Input.is_action_just_pressed("air cancel"):
+		collision_walk.disabled = false
+		collision_roll.disabled = true
 		player_movement.air_cancel()
 		state = states.WALKING
 		walked.emit()
-		print("air cancel")
 	if current_air_cancel_buffer_frame < air_cancel_buffer_frames:
 		current_air_cancel_buffer_frame += 1
 
