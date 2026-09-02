@@ -36,7 +36,8 @@ gun_impulse_frames = 5.0
 
 [node name="Camera" parent="." instance=ExtResource("2_w7dl2")]
 position_smoothing_speed = 30.0
-script = null
+shake_strengths = Array[float]([10.0, 20.0, 30.0])
+shake_fades = Array[float]([20.0, 20.0, 20.0])
 
 [node name="Input" type="Node" parent="." node_paths=PackedStringArray("player_movement", "player_guns", "collision_walk", "collision_roll")]
 script = ExtResource("2_g7jqk")
@@ -80,4 +81,5 @@ player_input = NodePath("../Input")
 [connection signal="rolled" from="Input" to="Crosshair" method="_on_rolled"]
 [connection signal="walked" from="Input" to="Anim" method="_on_roll_release"]
 [connection signal="walked" from="Input" to="Crosshair" method="_on_walked"]
+[connection signal="shot" from="Guns" to="Camera" method="_on_shot"]
 [connection signal="shot" from="Guns" to="Anim" method="_on_shoot"]

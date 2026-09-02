@@ -1,4 +1,29 @@
 extends Camera2D
+
+var rng = RandomNumberGenerator.new()
+
+var shake_strength: float = 0.0
+var shake_fade: float = 0.0
+@export var shake_strengths: Array[float]
+@export var shake_fades: Array[float]
+
+func _process(delta):
+	if shake_strength > 0:
+		shake_strength = lerp(shake_strength, 0.0, shake_fade * delta)
+		offset = Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
+
+func _on_shot(gun_type: String):
+	var shake_index: int
+	match gun_type:
+		"revolver":
+			shake_index = 0
+		"shotgun":
+			shake_index = 1
+		"rifle":
+			shake_index = 2
+	shake_strength = shake_strengths[shake_index]
+	shake_fade = shake_fades[shake_index]
+
 '''
 @export var player: CharacterBody2D
 

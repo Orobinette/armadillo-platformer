@@ -94,7 +94,7 @@ func _on_roll_release():
 	rolling = false
 	current_fall_time = 0
 
-func _on_shoot():
+func _on_shoot(_gun_type):
 	if player_input.dir_facing == 1:
 		play("roll_R")
 	elif player_input.dir_facing == -1:
