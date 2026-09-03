@@ -11,6 +11,7 @@ var dir = 1
 
 func _ready():
 	position = Vector2(0,0)
+	hide()
 
 func _physics_process(delta):
 	if radians == 2 * PI:
