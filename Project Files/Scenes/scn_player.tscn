@@ -53,7 +53,7 @@ player_input = NodePath("../Input")
 
 [node name="Anim" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("player_movement", "player_input")]
 sprite_frames = ExtResource("2_8apyp")
-animation = &"air_cancel_L"
+animation = &"idle_R"
 script = ExtResource("3_8ixvj")
 player_movement = NodePath("..")
 player_input = NodePath("../Input")
